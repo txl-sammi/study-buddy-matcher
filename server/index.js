@@ -19,29 +19,10 @@ app.get("/", (req, res) => {
     res.send("StudyBuddyFinder API");
 });
 
+const CONNECTION_URL="mongodb+srv://catalyst:Catalyst2023@cluster.12ldr0v.mongodb.net/?retryWrites=true&w=majority"
 const PORT = process.env.PORT || 5000;
 
-// Load envioronment variables
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-   }
-   const mongoose = require('mongoose')
-   // Connect to your mongo database using the MONGO_URL environment
-   variable.
-   // Locally, MONGO_URL will be loaded by dotenv from .env.
-   // We've also used Heroku CLI to set MONGO_URL for our Heroku app before.
-   mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: 'demo'
-   })
-   // Exit on error
-   const db = mongoose.connection.on('error', err => {
-    console.error(err);
-    process.exit(1)
-   })
-   // Log to console once the database is open
-   db.once('open', async () => {
-    console.log(`Mongo connection started on ${db.host}:${db.port}`)
-   })
-   require('./author')
+mongoose.connect(CONNECTION_URL, { useNewParser: true, useUnifiedTopology: true})
+    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+    .catch((error) => console.log(error.message));
+
